@@ -1,0 +1,72 @@
+name: Go CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Build
+        run: go build -v ./...
+
+      - name: Test (all)
+        run: go test -v ./...
+
+      - name: Unit coverage (exclude integration) + 80% gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          UNIT_PKGS=$(go list ./... | grep -v '/integration$')
+          go test -covermode=atomic -coverprofile=coverage-unit.out $UNIT_PKGS
+          go tool cover -func=coverage-unit.out | tee coverage-unit.txt
+          go tool cover -html=coverage-unit.out -o coverage-unit.html
+
+          TOTAL=$(go tool cover -func=coverage-unit.out | awk '/^total:/ {gsub("%","",$3); print $3}')
+          awk -v t="$TOTAL" 'BEGIN {
+            if (t+0 < 80) {
+              printf "Unit coverage gate failed: %.1f%% < 80%%\n", t
+              exit 1
+            } else {
+              printf "Unit coverage gate passed: %.1f%% >= 80%%\n", t
+            }
+          }'
+
+      - name: Full coverage (include integration)
+        shell: bash
+        run: |
+          set -euo pipefail
+          go test -covermode=atomic -coverprofile=coverage-all.out ./...
+          go tool cover -func=coverage-all.out | tee coverage-all.txt
+          go tool cover -html=coverage-all.out -o coverage-all.html
+
+      - name: Benchmarks
+        shell: bash
+        run: |
+          set -euo pipefail
+          go test -bench . -benchmem -run '^$' ./... | tee benchmark-report.txt
+
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: go-quality-reports
+          path: |
+            coverage-unit.out
+            coverage-unit.txt
+            coverage-unit.html
+            coverage-all.out
+            coverage-all.txt
+            coverage-all.html
+            benchmark-report.txt
