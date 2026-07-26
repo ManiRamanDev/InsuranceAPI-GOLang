@@ -1,0 +1,2038 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>server: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">insurance-api/cmd/server/main.go (6.5%)</option>
+				
+				<option value="file1">insurance-api/internal/config/api_config.go (78.9%)</option>
+				
+				<option value="file2">insurance-api/internal/config/db_config.go (76.0%)</option>
+				
+				<option value="file3">insurance-api/internal/config/log_config.go (100.0%)</option>
+				
+				<option value="file4">insurance-api/internal/database/db.go (23.1%)</option>
+				
+				<option value="file5">insurance-api/internal/handlers/claim_handler.go (64.3%)</option>
+				
+				<option value="file6">insurance-api/internal/handlers/customer_handler.go (75.0%)</option>
+				
+				<option value="file7">insurance-api/internal/handlers/customer_policy_handler.go (64.3%)</option>
+				
+				<option value="file8">insurance-api/internal/handlers/policy_handler.go (67.9%)</option>
+				
+				<option value="file9">insurance-api/internal/logger/logger.go (81.5%)</option>
+				
+				<option value="file10">insurance-api/internal/middleware/Recovery.go (84.6%)</option>
+				
+				<option value="file11">insurance-api/internal/middleware/content_type_validation.go (100.0%)</option>
+				
+				<option value="file12">insurance-api/internal/middleware/request_logging.go (83.3%)</option>
+				
+				<option value="file13">insurance-api/internal/repository/claims_repository_impl.go (0.0%)</option>
+				
+				<option value="file14">insurance-api/internal/repository/customer_policy_repository_impl.go (0.0%)</option>
+				
+				<option value="file15">insurance-api/internal/repository/customer_repository_impl.go (0.0%)</option>
+				
+				<option value="file16">insurance-api/internal/repository/policy_repository_impl.go (0.0%)</option>
+				
+				<option value="file17">insurance-api/internal/routes/claim_routes.go (100.0%)</option>
+				
+				<option value="file18">insurance-api/internal/routes/customer_policy_routes.go (100.0%)</option>
+				
+				<option value="file19">insurance-api/internal/routes/customer_routes.go (100.0%)</option>
+				
+				<option value="file20">insurance-api/internal/routes/policy_routes.go (100.0%)</option>
+				
+				<option value="file21">insurance-api/internal/routes/routes.go (100.0%)</option>
+				
+				<option value="file22">insurance-api/internal/service/claim_service_impl.go (100.0%)</option>
+				
+				<option value="file23">insurance-api/internal/service/customer_policy_service_impl.go (100.0%)</option>
+				
+				<option value="file24">insurance-api/internal/service/customer_service_impl.go (100.0%)</option>
+				
+				<option value="file25">insurance-api/internal/service/policy_service_impl.go (100.0%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package main
+
+import (
+        "fmt"
+        "insurance-api/internal/config"
+        "insurance-api/internal/database"
+        "insurance-api/internal/handlers"
+        "insurance-api/internal/logger"
+        "insurance-api/internal/models"
+        "insurance-api/internal/repository"
+        "insurance-api/internal/routes"
+        "insurance-api/internal/service"
+        "log"
+        "net/http"
+)
+
+func main() <span class="cov0" title="0">{
+
+        // Load Configurations
+        apiConfig, err := config.LoadAPIConfig()
+
+        fmt.Println("API Config:", apiConfig)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Fatal(err)
+        }</span>
+
+        <span class="cov0" title="0">dbConfig, err := config.LoadDatabaseConfig()
+        if err != nil </span><span class="cov0" title="0">{
+                log.Fatal(err)
+        }</span>
+
+        <span class="cov0" title="0">logConfig, err := config.LoadLogConfig()
+        if err != nil </span><span class="cov0" title="0">{
+                log.Fatal(err)
+        }</span>
+
+        // Initialize Logger
+        <span class="cov0" title="0">appLogger, err := logger.New(logConfig)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Fatal(err)
+        }</span>
+        <span class="cov0" title="0">defer appLogger.Close()
+
+        appLogger.Info("Starting Insurance API...")
+
+        // Connect Database
+        db, err := database.Connect(dbConfig)
+        if err != nil </span><span class="cov0" title="0">{
+                appLogger.Error("Database connection failed", err)
+                log.Fatal(err)
+        }</span>
+
+        <span class="cov0" title="0">err = db.AutoMigrate(
+                &amp;models.Customer{},
+                &amp;models.Policy{},
+                &amp;models.CustomerPolicy{},
+                &amp;models.Claim{},
+        )
+
+        if err != nil </span><span class="cov0" title="0">{
+                appLogger.Error("Database migration failed", err)
+                log.Fatal(err)
+        }</span>
+
+        // Prevent "declared and not used"
+        <span class="cov0" title="0">_ = db
+
+        // Create Router
+        mux := http.NewServeMux()
+
+        customerRepo := repository.NewCustomerRepository(db)
+        customerService := service.NewCustomerService(customerRepo)
+        customerHandler := handlers.NewCustomerHandler(customerService)
+
+        policyRepo := repository.NewPolicyRepository(db)
+        policyService := service.NewPolicyService(policyRepo)
+        policyHandler := handlers.NewPolicyHandler(policyService)
+
+        customerPolicyRepo := repository.NewCustomerPolicyRepository(db)
+        customerPolicyService := service.NewCustomerPolicyService(customerPolicyRepo)
+        customerPolicyHandler := handlers.NewCustomerPolicyHandler(customerPolicyService)
+
+        claimRepo := repository.NewClaimRepository(db)
+        claimService := service.NewClaimService(claimRepo)
+        claimHandler := handlers.NewClaimHandler(claimService)
+
+        routes.RegisterRoutes(mux,
+                customerHandler,
+                policyHandler,
+                customerPolicyHandler,
+                claimHandler)
+
+        // Temporary Health Endpoint
+        registerHealthEndpoint(mux)
+
+        appLogger.Info("Server listening on port " + apiConfig.HTTPPort)
+
+        /*if err := http.ListenAndServe(":"+apiConfig.HTTPPort, mux); err != nil {
+                appLogger.Error("Server stopped", err)
+                log.Fatal(err)
+        }*/
+
+        if err := http.ListenAndServeTLS("insurance-api.company.local:8443",
+                "C:/certificates/RootSSL.crt",
+                "C:/certificates/RootSSL.key", mux); err != nil </span><span class="cov0" title="0">{
+                appLogger.Error("Server stopped", err)
+                log.Fatal(err)
+        }</span>
+}
+
+func registerHealthEndpoint(mux *http.ServeMux) <span class="cov8" title="1">{
+        mux.HandleFunc("GET /health", func(w http.ResponseWriter, r *http.Request) </span><span class="cov8" title="1">{
+                w.WriteHeader(http.StatusOK)
+                w.Write([]byte("Insurance API is running"))
+        }</span>)
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package config
+
+import (
+        "fmt"
+        "os"
+        "strconv"
+        "strings"
+)
+
+const (
+        // DefaultHTTPAddress is the local address used when no address is configured.
+        DefaultHTTPAddress = "localhost"
+        DefaultPort        = "8080"
+        SecuredPort        = "8443"
+        // DefaultMaxRequestBodyBytes limits JSON request bodies to 500 KB.
+        DefaultMaxRequestBodyBytes int64 = 500 * 1024
+
+        // API endpoint paths.
+        CustomersPath = "/customers"
+        PoliciesPath  = "/policies"
+        ClaimsPath    = "/claims"
+
+        // CustomerPolicyPath documents the assignment endpoint shape.
+        CustomerPolicyPath = "/customers/{customerID}/policies/{policyID}"
+)
+
+// APIConfig contains HTTP, HTTPS, and request-limit configuration.
+type APIConfig struct {
+        HTTPAddress         string
+        HTTPSEnabled        bool
+        TLSCertificateFile  string
+        TLSPrivateKeyFile   string
+        MaxRequestBodyBytes int64
+        HTTPPort            string
+}
+
+// LoadAPIConfig reads API configuration from environment variables.
+func LoadAPIConfig() (APIConfig, error) <span class="cov8" title="1">{
+        config := APIConfig{
+                HTTPAddress:         optionalEnv("INSURANCE_HTTP_ADDRESS", DefaultHTTPAddress),
+                MaxRequestBodyBytes: DefaultMaxRequestBodyBytes,
+                HTTPPort:            DefaultPort,
+        }
+
+        httpsEnabled, err := optionalBoolEnv("INSURANCE_HTTPS_ENABLED", false)
+        if err != nil </span><span class="cov8" title="1">{
+                return APIConfig{}, err
+        }</span>
+        <span class="cov8" title="1">config.HTTPSEnabled = httpsEnabled
+
+        maxRequestBodyBytes, err := optionalPositiveInt64Env(
+                "INSURANCE_MAX_REQUEST_BODY_BYTES",
+                DefaultMaxRequestBodyBytes,
+        )
+        if err != nil </span><span class="cov0" title="0">{
+                return APIConfig{}, err
+        }</span>
+        <span class="cov8" title="1">config.MaxRequestBodyBytes = maxRequestBodyBytes
+
+        if !config.HTTPSEnabled </span><span class="cov8" title="1">{
+                return config, nil
+        }</span>
+
+        <span class="cov8" title="1">certificateFile, err := requiredEnv("INSURANCE_TLS_CERT_FILE")
+        if err != nil </span><span class="cov8" title="1">{
+                return APIConfig{}, err
+        }</span>
+
+        <span class="cov0" title="0">privateKeyFile, err := requiredEnv("INSURANCE_TLS_KEY_FILE")
+        if err != nil </span><span class="cov0" title="0">{
+                return APIConfig{}, err
+        }</span>
+
+        <span class="cov0" title="0">config.TLSCertificateFile = certificateFile
+        config.TLSPrivateKeyFile = privateKeyFile
+
+        return config, nil</span>
+}
+
+func optionalEnv(name, defaultValue string) string <span class="cov8" title="1">{
+        value := strings.TrimSpace(os.Getenv(name))
+        if value == "" </span><span class="cov8" title="1">{
+                return defaultValue
+        }</span>
+
+        <span class="cov8" title="1">return value</span>
+}
+
+func optionalBoolEnv(name string, defaultValue bool) (bool, error) <span class="cov8" title="1">{
+        value := strings.TrimSpace(os.Getenv(name))
+        if value == "" </span><span class="cov8" title="1">{
+                return defaultValue, nil
+        }</span>
+
+        <span class="cov8" title="1">parsedValue, err := strconv.ParseBool(value)
+        if err != nil </span><span class="cov8" title="1">{
+                return false, fmt.Errorf("environment variable %s must be true or false", name)
+        }</span>
+
+        <span class="cov8" title="1">return parsedValue, nil</span>
+}
+
+func optionalPositiveInt64Env(name string, defaultValue int64) (int64, error) <span class="cov8" title="1">{
+        value := strings.TrimSpace(os.Getenv(name))
+        if value == "" </span><span class="cov8" title="1">{
+                return defaultValue, nil
+        }</span>
+
+        <span class="cov8" title="1">parsedValue, err := strconv.ParseInt(value, 10, 64)
+        if err != nil || parsedValue &lt;= 0 </span><span class="cov0" title="0">{
+                return 0, fmt.Errorf("environment variable %s must be a positive number", name)
+        }</span>
+
+        <span class="cov8" title="1">return parsedValue, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package config
+
+import (
+        "encoding/base64"
+        "fmt"
+        "os"
+        "strings"
+)
+
+// DatabaseConfig contains the database values needed to establish a connection.
+type DatabaseConfig struct {
+        Host     string
+        Port     string
+        Name     string
+        User     string
+        Password string
+}
+
+// LoadDatabaseConfig reads, validates, and prepares database configuration.
+func LoadDatabaseConfig() (DatabaseConfig, error) <span class="cov8" title="1">{
+        host, err := requiredEnv("INSURANCE_DB_HOST")
+        if err != nil </span><span class="cov0" title="0">{
+                return DatabaseConfig{}, err
+        }</span>
+
+        <span class="cov8" title="1">port, err := requiredEnv("INSURANCE_DB_PORT")
+        if err != nil </span><span class="cov0" title="0">{
+                return DatabaseConfig{}, err
+        }</span>
+
+        <span class="cov8" title="1">name, err := requiredEnv("INSURANCE_DB_NAME")
+        if err != nil </span><span class="cov0" title="0">{
+                return DatabaseConfig{}, err
+        }</span>
+
+        <span class="cov8" title="1">user, err := requiredEnv("INSURANCE_DB_USER")
+        if err != nil </span><span class="cov0" title="0">{
+                return DatabaseConfig{}, err
+        }</span>
+
+        <span class="cov8" title="1">secret, err := requiredEnv("INSURANCE_DB_SECRET")
+        if err != nil </span><span class="cov0" title="0">{
+                return DatabaseConfig{}, err
+        }</span>
+
+        <span class="cov8" title="1">passwordBytes, err := base64.StdEncoding.DecodeString(secret)
+        if err != nil </span><span class="cov8" title="1">{
+                return DatabaseConfig{}, fmt.Errorf("database secret is invalid")
+        }</span>
+
+        <span class="cov8" title="1">if len(passwordBytes) == 0 </span><span class="cov0" title="0">{
+                return DatabaseConfig{}, fmt.Errorf("database secret is invalid")
+        }</span>
+
+        <span class="cov8" title="1">return DatabaseConfig{
+                Host:     host,
+                Port:     port,
+                Name:     name,
+                User:     user,
+                Password: string(passwordBytes),
+        }, nil</span>
+}
+
+func requiredEnv(name string) (string, error) <span class="cov8" title="1">{
+        value := strings.TrimSpace(os.Getenv(name))
+        if value == "" </span><span class="cov8" title="1">{
+                return "", fmt.Errorf("required environment variable %s is not set", name)
+        }</span>
+
+        <span class="cov8" title="1">return value, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">package config
+
+import (
+        "fmt"
+        "path/filepath"
+        "strings"
+)
+
+const (
+        // DefaultLogDirectory is where application log files are written.
+        DefaultLogDirectory = "logs"
+
+        // DefaultLogFileName is the application log file name.
+        DefaultLogFileName = "insurance-api.log"
+
+        // DefaultLogLevel controls the minimum log level written by the logger.
+        DefaultLogLevel = "INFO"
+)
+
+// LogConfig contains file-logging settings.
+type LogConfig struct {
+        Directory string
+        FileName  string
+        Level     string
+}
+
+// LoadLogConfig reads and validates logging configuration.
+func LoadLogConfig() (LogConfig, error) <span class="cov8" title="1">{
+        directory := optionalEnv("INSURANCE_LOG_DIRECTORY", DefaultLogDirectory)
+        fileName := optionalEnv("INSURANCE_LOG_FILE", DefaultLogFileName)
+        level := strings.ToUpper(optionalEnv("INSURANCE_LOG_LEVEL", DefaultLogLevel))
+
+        if filepath.Base(fileName) != fileName </span><span class="cov8" title="1">{
+                return LogConfig{}, fmt.Errorf("INSURANCE_LOG_FILE must contain only a file name")
+        }</span>
+
+        <span class="cov8" title="1">switch level </span>{
+        case "DEBUG", "INFO", "WARN", "ERROR":<span class="cov8" title="1"></span>
+        default:<span class="cov8" title="1">
+                return LogConfig{}, fmt.Errorf(
+                        "INSURANCE_LOG_LEVEL must be DEBUG, INFO, WARN, or ERROR",
+                )</span>
+        }
+
+        <span class="cov8" title="1">return LogConfig{
+                Directory: directory,
+                FileName:  fileName,
+                Level:     level,
+        }, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file4" style="display: none">package database
+
+import (
+        "fmt"
+
+        "insurance-api/internal/config"
+        "insurance-api/internal/models"
+
+        "gorm.io/driver/postgres"
+        "gorm.io/gorm"
+)
+
+// Connect establishes and verifies a PostgreSQL database connection.
+func Connect(dbConfig config.DatabaseConfig) (*gorm.DB, error) <span class="cov8" title="1">{
+        if dbConfig.Host == "" ||
+                dbConfig.Port == "" ||
+                dbConfig.Name == "" ||
+                dbConfig.User == "" ||
+                dbConfig.Password == "" </span><span class="cov8" title="1">{
+                return nil, fmt.Errorf("database configuration is incomplete")
+        }</span>
+
+        <span class="cov0" title="0">dsn := fmt.Sprintf(
+                "host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+                dbConfig.Host,
+                dbConfig.Port,
+                dbConfig.User,
+                dbConfig.Password,
+                dbConfig.Name,
+        )
+
+        db, err := gorm.Open(postgres.Open(dsn), &amp;gorm.Config{})
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("open database connection: %w", err)
+        }</span>
+
+        <span class="cov0" title="0">sqlDB, err := db.DB()
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("get SQL database connection: %w", err)
+        }</span>
+
+        <span class="cov0" title="0">if err := sqlDB.Ping(); err != nil </span><span class="cov0" title="0">{
+                _ = sqlDB.Close()
+                return nil, fmt.Errorf("ping database: %w", err)
+        }</span>
+
+        <span class="cov0" title="0">return db, nil</span>
+}
+
+// InitSchema creates missing tables and applies compatible schema changes.
+func InitSchema(db *gorm.DB) error <span class="cov8" title="1">{
+        if db == nil </span><span class="cov8" title="1">{
+                return fmt.Errorf("database instance is nil")
+        }</span>
+
+        <span class="cov0" title="0">if err := db.AutoMigrate(
+                &amp;models.Customer{},
+                &amp;models.Policy{},
+                &amp;models.CustomerPolicy{},
+                &amp;models.Claim{},
+        ); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("migrate database schema: %w", err)
+        }</span>
+
+        <span class="cov0" title="0">return nil</span>
+}
+
+// Close releases the PostgreSQL connection.
+func Close(db *gorm.DB) error <span class="cov8" title="1">{
+        if db == nil </span><span class="cov8" title="1">{
+                return nil
+        }</span>
+
+        <span class="cov0" title="0">sqlDB, err := db.DB()
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("get SQL database connection: %w", err)
+        }</span>
+
+        <span class="cov0" title="0">if err := sqlDB.Close(); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("close database connection: %w", err)
+        }</span>
+
+        <span class="cov0" title="0">return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file5" style="display: none">package handlers
+
+import (
+        "encoding/json"
+        "net/http"
+        "strconv"
+
+        "insurance-api/internal/dto"
+        "insurance-api/internal/models"
+        "insurance-api/internal/service"
+)
+
+type ClaimHandler struct {
+        service service.ClaimService
+}
+
+func NewClaimHandler(service service.ClaimService) *ClaimHandler <span class="cov8" title="1">{
+        return &amp;ClaimHandler{
+                service: service,
+        }
+}</span>
+
+// Create Claim
+func (h *ClaimHandler) Create(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+
+        var req dto.CreateClaimRequest
+
+        if err := json.NewDecoder(r.Body).Decode(&amp;req); err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Invalid request body", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">claim := models.Claim{
+                CustomerPolicyID: req.CustomerPolicyID,
+                ClaimAmount:      req.ClaimAmount,
+                Reason:           req.Reason,
+                Status:           req.Status,
+                ClaimDate:        req.ClaimDate,
+        }
+
+        if err := h.service.Create(&amp;claim); err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">response := dto.ClaimResponse{
+                ID:               claim.ID,
+                CustomerPolicyID: claim.CustomerPolicyID,
+                ClaimAmount:      claim.ClaimAmount,
+                Reason:           claim.Reason,
+                Status:           claim.Status,
+                ClaimDate:        claim.ClaimDate,
+                CreatedAt:        claim.CreatedAt,
+                UpdatedAt:        claim.UpdatedAt,
+        }
+
+        w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusCreated)
+        json.NewEncoder(w).Encode(response)</span>
+}
+
+// Get All Claims
+func (h *ClaimHandler) GetAll(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+
+        claims, err := h.service.GetAll()
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">response := make([]dto.ClaimResponse, 0)
+
+        for _, claim := range claims </span><span class="cov8" title="1">{
+                response = append(response, dto.ClaimResponse{
+                        ID:               claim.ID,
+                        CustomerPolicyID: claim.CustomerPolicyID,
+                        ClaimAmount:      claim.ClaimAmount,
+                        Reason:           claim.Reason,
+                        Status:           claim.Status,
+                        ClaimDate:        claim.ClaimDate,
+                        CreatedAt:        claim.CreatedAt,
+                        UpdatedAt:        claim.UpdatedAt,
+                })
+        }</span>
+
+        <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
+        json.NewEncoder(w).Encode(response)</span>
+}
+
+// Get Claim By ID
+func (h *ClaimHandler) GetByID(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+
+        id, err := strconv.ParseUint(r.PathValue("id"), 10, 64)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Invalid claim ID", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">claim, err := h.service.GetByID(uint(id))
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusNotFound)
+                return
+        }</span>
+
+        <span class="cov8" title="1">response := dto.ClaimResponse{
+                ID:               claim.ID,
+                CustomerPolicyID: claim.CustomerPolicyID,
+                ClaimAmount:      claim.ClaimAmount,
+                Reason:           claim.Reason,
+                Status:           claim.Status,
+                ClaimDate:        claim.ClaimDate,
+                CreatedAt:        claim.CreatedAt,
+                UpdatedAt:        claim.UpdatedAt,
+        }
+
+        w.Header().Set("Content-Type", "application/json")
+        json.NewEncoder(w).Encode(response)</span>
+}
+
+// Update Claim
+func (h *ClaimHandler) Update(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+
+        id, err := strconv.ParseUint(r.PathValue("id"), 10, 64)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Invalid claim ID", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">var req dto.UpdateClaimRequest
+
+        if err := json.NewDecoder(r.Body).Decode(&amp;req); err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Invalid request body", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">claim := models.Claim{
+                ID:          uint(id),
+                ClaimAmount: req.ClaimAmount,
+                Reason:      req.Reason,
+                Status:      req.Status,
+        }
+
+        if err := h.service.Update(&amp;claim); err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">response := dto.ClaimResponse{
+                ID:               claim.ID,
+                CustomerPolicyID: claim.CustomerPolicyID,
+                ClaimAmount:      claim.ClaimAmount,
+                Reason:           claim.Reason,
+                Status:           claim.Status,
+                ClaimDate:        claim.ClaimDate,
+                CreatedAt:        claim.CreatedAt,
+                UpdatedAt:        claim.UpdatedAt,
+        }
+
+        w.Header().Set("Content-Type", "application/json")
+        json.NewEncoder(w).Encode(response)</span>
+}
+
+// Delete Claim
+func (h *ClaimHandler) Delete(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+
+        id, err := strconv.ParseUint(r.PathValue("id"), 10, 64)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Invalid claim ID", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">if err := h.service.Delete(uint(id)); err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">w.WriteHeader(http.StatusNoContent)</span>
+}
+</pre>
+		
+		<pre class="file" id="file6" style="display: none">package handlers
+
+import (
+        json "encoding/json"
+        dto "insurance-api/internal/dto"
+        models "insurance-api/internal/models"
+        service "insurance-api/internal/service"
+        http "net/http"
+        "strconv"
+)
+
+type CustomerHandler struct {
+        service service.CustomerService
+}
+
+func NewCustomerHandler(service service.CustomerService) *CustomerHandler <span class="cov8" title="1">{
+        return &amp;CustomerHandler{
+                service: service,
+        }
+}</span>
+
+func (h *CustomerHandler) Create(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+
+        var req dto.CreateCustomerRequest
+
+        if err := json.NewDecoder(r.Body).Decode(&amp;req); err != nil </span><span class="cov8" title="1">{
+                http.Error(w, "Invalid request body", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">customer := models.Customer{
+                FirstName: req.FirstName,
+                LastName:  req.LastName,
+                Email:     req.Email,
+                Phone:     req.PhoneNumber,
+                Address:   req.Address,
+        }
+
+        if err := h.service.Create(&amp;customer); err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">response := dto.CustomerResponse{
+                ID:        customer.ID,
+                FirstName: customer.FirstName,
+                LastName:  customer.LastName,
+                Email:     customer.Email,
+                Address:   customer.Address,
+                CreatedAt: customer.CreatedAt,
+                UpdatedAt: customer.UpdatedAt,
+        }
+
+        w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusCreated)
+
+        json.NewEncoder(w).Encode(response)</span>
+}
+
+// Get all
+func (h *CustomerHandler) GetAll(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        customers, err := h.service.GetAll()
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">var response []dto.CustomerResponse
+
+        for _, customer := range customers </span><span class="cov8" title="1">{
+                response = append(response, dto.CustomerResponse{
+                        ID:          customer.ID,
+                        FirstName:   customer.FirstName,
+                        LastName:    customer.LastName,
+                        Email:       customer.Email,
+                        PhoneNumber: customer.Phone,
+                        Address:     customer.Address,
+                        CreatedAt:   customer.CreatedAt,
+                        UpdatedAt:   customer.UpdatedAt,
+                })
+        }</span>
+
+        <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
+        json.NewEncoder(w).Encode(response)</span>
+}
+
+func (h *CustomerHandler) GetByID(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        id, err := strconv.ParseUint(r.PathValue("id"), 10, 64)
+        if err != nil </span><span class="cov8" title="1">{
+                http.Error(w, "Invalid customer ID", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">customer, err := h.service.GetByID(uint(id))
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusNotFound)
+                return
+        }</span>
+
+        <span class="cov8" title="1">response := dto.CustomerResponse{
+                ID:          customer.ID,
+                FirstName:   customer.FirstName,
+                LastName:    customer.LastName,
+                Email:       customer.Email,
+                PhoneNumber: customer.Phone,
+                Address:     customer.Address,
+                CreatedAt:   customer.CreatedAt,
+                UpdatedAt:   customer.UpdatedAt,
+        }
+
+        w.Header().Set("Content-Type", "application/json")
+        json.NewEncoder(w).Encode(response)</span>
+}
+
+func (h *CustomerHandler) Update(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        id, err := strconv.ParseUint(r.PathValue("id"), 10, 64)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Invalid customer ID", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">var req dto.UpdateCustomerRequest
+
+        if err := json.NewDecoder(r.Body).Decode(&amp;req); err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Invalid request body", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">customer := models.Customer{
+                ID:        uint(id),
+                FirstName: req.FirstName,
+                LastName:  req.LastName,
+                Email:     req.Email,
+                Phone:     req.PhoneNumber,
+                Address:   req.Address,
+        }
+
+        if err := h.service.Update(&amp;customer); err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">response := dto.CustomerResponse{
+                ID:          customer.ID,
+                FirstName:   customer.FirstName,
+                LastName:    customer.LastName,
+                Email:       customer.Email,
+                PhoneNumber: customer.Phone,
+                Address:     customer.Address,
+                UpdatedAt:   customer.UpdatedAt,
+        }
+
+        w.Header().Set("Content-Type", "application/json")
+        json.NewEncoder(w).Encode(response)</span>
+}
+
+func (h *CustomerHandler) Delete(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        id, err := strconv.ParseUint(r.PathValue("id"), 10, 64)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Invalid customer ID", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">if err := h.service.Delete(uint(id)); err != nil </span><span class="cov8" title="1">{
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">w.WriteHeader(http.StatusNoContent)</span>
+}
+</pre>
+		
+		<pre class="file" id="file7" style="display: none">package handlers
+
+import (
+        "encoding/json"
+        "net/http"
+        "strconv"
+
+        "insurance-api/internal/dto"
+        "insurance-api/internal/models"
+        "insurance-api/internal/service"
+)
+
+type CustomerPolicyHandler struct {
+        service service.CustomerPolicyService
+}
+
+func NewCustomerPolicyHandler(service service.CustomerPolicyService) *CustomerPolicyHandler <span class="cov8" title="1">{
+        return &amp;CustomerPolicyHandler{
+                service: service,
+        }
+}</span>
+
+// Create Customer Policy
+func (h *CustomerPolicyHandler) Create(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+
+        var req dto.CreateCustomerPolicyRequest
+
+        if err := json.NewDecoder(r.Body).Decode(&amp;req); err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Invalid request body", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">customerPolicy := models.CustomerPolicy{
+                CustomerID: req.CustomerID,
+                PolicyID:   req.PolicyID,
+                StartDate:  req.StartDate,
+                EndDate:    req.EndDate,
+                Status:     req.Status,
+        }
+
+        if err := h.service.Create(&amp;customerPolicy); err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">response := dto.CustomerPolicyResponse{
+                ID:         customerPolicy.ID,
+                CustomerID: customerPolicy.CustomerID,
+                PolicyID:   customerPolicy.PolicyID,
+                StartDate:  customerPolicy.StartDate,
+                EndDate:    customerPolicy.EndDate,
+                Status:     customerPolicy.Status,
+                CreatedAt:  customerPolicy.CreatedAt,
+                UpdatedAt:  customerPolicy.UpdatedAt,
+        }
+
+        w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusCreated)
+        json.NewEncoder(w).Encode(response)</span>
+}
+
+// Get All Customer Policies
+func (h *CustomerPolicyHandler) GetAll(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+
+        customerPolicies, err := h.service.GetAll()
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">response := make([]dto.CustomerPolicyResponse, 0)
+
+        for _, cp := range customerPolicies </span><span class="cov8" title="1">{
+                response = append(response, dto.CustomerPolicyResponse{
+                        ID:         cp.ID,
+                        CustomerID: cp.CustomerID,
+                        PolicyID:   cp.PolicyID,
+                        StartDate:  cp.StartDate,
+                        EndDate:    cp.EndDate,
+                        Status:     cp.Status,
+                        CreatedAt:  cp.CreatedAt,
+                        UpdatedAt:  cp.UpdatedAt,
+                })
+        }</span>
+
+        <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
+        json.NewEncoder(w).Encode(response)</span>
+}
+
+// Get Customer Policy By ID
+func (h *CustomerPolicyHandler) GetByID(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+
+        id, err := strconv.ParseUint(r.PathValue("id"), 10, 64)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Invalid customer policy ID", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">customerPolicy, err := h.service.GetByID(uint(id))
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusNotFound)
+                return
+        }</span>
+
+        <span class="cov8" title="1">response := dto.CustomerPolicyResponse{
+                ID:         customerPolicy.ID,
+                CustomerID: customerPolicy.CustomerID,
+                PolicyID:   customerPolicy.PolicyID,
+                StartDate:  customerPolicy.StartDate,
+                EndDate:    customerPolicy.EndDate,
+                Status:     customerPolicy.Status,
+                CreatedAt:  customerPolicy.CreatedAt,
+                UpdatedAt:  customerPolicy.UpdatedAt,
+        }
+
+        w.Header().Set("Content-Type", "application/json")
+        json.NewEncoder(w).Encode(response)</span>
+}
+
+// Update Customer Policy
+func (h *CustomerPolicyHandler) Update(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+
+        id, err := strconv.ParseUint(r.PathValue("id"), 10, 64)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Invalid customer policy ID", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">var req dto.UpdateCustomerPolicyRequest
+
+        if err := json.NewDecoder(r.Body).Decode(&amp;req); err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Invalid request body", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">customerPolicy := models.CustomerPolicy{
+                ID:        uint(id),
+                StartDate: req.StartDate,
+                EndDate:   req.EndDate,
+                Status:    req.Status,
+        }
+
+        if err := h.service.Update(&amp;customerPolicy); err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">response := dto.CustomerPolicyResponse{
+                ID:         customerPolicy.ID,
+                CustomerID: customerPolicy.CustomerID,
+                PolicyID:   customerPolicy.PolicyID,
+                StartDate:  customerPolicy.StartDate,
+                EndDate:    customerPolicy.EndDate,
+                Status:     customerPolicy.Status,
+                CreatedAt:  customerPolicy.CreatedAt,
+                UpdatedAt:  customerPolicy.UpdatedAt,
+        }
+
+        w.Header().Set("Content-Type", "application/json")
+        json.NewEncoder(w).Encode(response)</span>
+}
+
+// Delete Customer Policy
+func (h *CustomerPolicyHandler) Delete(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+
+        id, err := strconv.ParseUint(r.PathValue("id"), 10, 64)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Invalid customer policy ID", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">if err := h.service.Delete(uint(id)); err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">w.WriteHeader(http.StatusNoContent)</span>
+}
+</pre>
+		
+		<pre class="file" id="file8" style="display: none">package handlers
+
+import (
+        "encoding/json"
+        "net/http"
+        "strconv"
+
+        "insurance-api/internal/dto"
+        "insurance-api/internal/models"
+        "insurance-api/internal/service"
+)
+
+type PolicyHandler struct {
+        service service.PolicyService
+}
+
+func NewPolicyHandler(service service.PolicyService) *PolicyHandler <span class="cov8" title="1">{
+        return &amp;PolicyHandler{
+                service: service,
+        }
+}</span>
+
+// Create Policy
+func (h *PolicyHandler) Create(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+
+        var req dto.CreatePolicyRequest
+
+        if err := json.NewDecoder(r.Body).Decode(&amp;req); err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Invalid request body", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">policy := models.Policy{
+                PolicyName:  req.PolicyName,
+                Description: req.Description,
+                Coverage:    req.Coverage,
+                Premium:     req.Premium,
+        }
+
+        if err := h.service.Create(&amp;policy); err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">response := dto.PolicyResponse{
+                ID:          policy.ID,
+                PolicyName:  policy.PolicyName,
+                Description: policy.Description,
+                Coverage:    policy.Coverage,
+                Premium:     policy.Premium,
+                CreatedAt:   policy.CreatedAt,
+                UpdatedAt:   policy.UpdatedAt,
+        }
+
+        w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusCreated)
+        json.NewEncoder(w).Encode(response)</span>
+}
+
+// Get All Policies
+func (h *PolicyHandler) GetAll(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+
+        policies, err := h.service.GetAll()
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">response := make([]dto.PolicyResponse, 0)
+
+        for _, policy := range policies </span><span class="cov8" title="1">{
+                response = append(response, dto.PolicyResponse{
+                        ID:          policy.ID,
+                        PolicyName:  policy.PolicyName,
+                        Description: policy.Description,
+                        Coverage:    policy.Coverage,
+                        Premium:     policy.Premium,
+                        CreatedAt:   policy.CreatedAt,
+                        UpdatedAt:   policy.UpdatedAt,
+                })
+        }</span>
+
+        <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
+        json.NewEncoder(w).Encode(response)</span>
+}
+
+// Get Policy By ID
+func (h *PolicyHandler) GetByID(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+
+        id, err := strconv.ParseUint(r.PathValue("id"), 10, 64)
+        if err != nil </span><span class="cov8" title="1">{
+                http.Error(w, "Invalid policy ID", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">policy, err := h.service.GetByID(uint(id))
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusNotFound)
+                return
+        }</span>
+
+        <span class="cov8" title="1">response := dto.PolicyResponse{
+                ID:          policy.ID,
+                PolicyName:  policy.PolicyName,
+                Description: policy.Description,
+                Coverage:    policy.Coverage,
+                Premium:     policy.Premium,
+                CreatedAt:   policy.CreatedAt,
+                UpdatedAt:   policy.UpdatedAt,
+        }
+
+        w.Header().Set("Content-Type", "application/json")
+        json.NewEncoder(w).Encode(response)</span>
+}
+
+// Update Policy
+func (h *PolicyHandler) Update(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+
+        id, err := strconv.ParseUint(r.PathValue("id"), 10, 64)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Invalid policy ID", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">var req dto.UpdatePolicyRequest
+
+        if err := json.NewDecoder(r.Body).Decode(&amp;req); err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Invalid request body", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">policy := models.Policy{
+                ID:          uint(id),
+                PolicyName:  req.PolicyName,
+                Description: req.Description,
+                Coverage:    req.Coverage,
+                Premium:     req.Premium,
+        }
+
+        if err := h.service.Update(&amp;policy); err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">response := dto.PolicyResponse{
+                ID:          policy.ID,
+                PolicyName:  policy.PolicyName,
+                Description: policy.Description,
+                Coverage:    policy.Coverage,
+                Premium:     policy.Premium,
+                CreatedAt:   policy.CreatedAt,
+                UpdatedAt:   policy.UpdatedAt,
+        }
+
+        w.Header().Set("Content-Type", "application/json")
+        json.NewEncoder(w).Encode(response)</span>
+}
+
+// Delete Policy
+func (h *PolicyHandler) Delete(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+
+        id, err := strconv.ParseUint(r.PathValue("id"), 10, 64)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Invalid policy ID", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">if err := h.service.Delete(uint(id)); err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">w.WriteHeader(http.StatusNoContent)</span>
+}
+</pre>
+		
+		<pre class="file" id="file9" style="display: none">package logger
+
+import (
+        "fmt"
+        "log/slog"
+        "os"
+        "path/filepath"
+
+        "insurance-api/internal/config"
+)
+
+// Logger writes structured application and audit logs.
+type Logger struct {
+        log  *slog.Logger
+        file *os.File
+}
+
+// New creates a file logger from application configuration.
+func New(logConfig config.LogConfig) (*Logger, error) <span class="cov8" title="1">{
+        level, err := parseLevel(logConfig.Level)
+        if err != nil </span><span class="cov8" title="1">{
+                return nil, err
+        }</span>
+
+        <span class="cov8" title="1">if err := os.MkdirAll(logConfig.Directory, 0o755); err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("create log directory: %w", err)
+        }</span>
+
+        <span class="cov8" title="1">logPath := filepath.Join(logConfig.Directory, logConfig.FileName)
+        file, err := os.OpenFile(logPath, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o640)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("open log file: %w", err)
+        }</span>
+
+        <span class="cov8" title="1">handler := slog.NewJSONHandler(file, &amp;slog.HandlerOptions{
+                Level: level,
+        })
+
+        return &amp;Logger{
+                log:  slog.New(handler),
+                file: file,
+        }, nil</span>
+}
+
+// Debug records diagnostic information.
+func (l *Logger) Debug(message string, fields ...any) <span class="cov8" title="1">{
+        l.log.Debug(message, fields...)
+}</span>
+
+// Info records normal application activity.
+func (l *Logger) Info(message string, fields ...any) <span class="cov8" title="1">{
+        l.log.Info(message, fields...)
+}</span>
+
+// Warn records unexpected but recoverable activity.
+func (l *Logger) Warn(message string, fields ...any) <span class="cov8" title="1">{
+        l.log.Warn(message, fields...)
+}</span>
+
+// Error records a failure that needs attention.
+func (l *Logger) Error(message string, err error, fields ...any) <span class="cov8" title="1">{
+        fields = append(fields, "error", err)
+        l.log.Error(message, fields...)
+}</span>
+
+// Audit records a business action for later review.
+func (l *Logger) Audit(action string, fields ...any) <span class="cov8" title="1">{
+        fields = append([]any{"event_type", "audit", "action", action}, fields...)
+        l.log.Info("audit event", fields...)
+}</span>
+
+// Close releases the log file handle.
+func (l *Logger) Close() error <span class="cov8" title="1">{
+        if l.file == nil </span><span class="cov8" title="1">{
+                return nil
+        }</span>
+
+        <span class="cov8" title="1">return l.file.Close()</span>
+}
+
+func parseLevel(level string) (slog.Level, error) <span class="cov8" title="1">{
+        switch level </span>{
+        case "DEBUG":<span class="cov0" title="0">
+                return slog.LevelDebug, nil</span>
+        case "INFO":<span class="cov8" title="1">
+                return slog.LevelInfo, nil</span>
+        case "WARN":<span class="cov0" title="0">
+                return slog.LevelWarn, nil</span>
+        case "ERROR":<span class="cov0" title="0">
+                return slog.LevelError, nil</span>
+        default:<span class="cov8" title="1">
+                return 0, fmt.Errorf("unsupported log level %q", level)</span>
+        }
+}
+</pre>
+		
+		<pre class="file" id="file10" style="display: none">package middleware
+
+import (
+        "insurance-api/internal/config"
+        "insurance-api/internal/logger"
+        "log"
+        "net/http"
+)
+
+func Recovery(next http.Handler) http.Handler <span class="cov8" title="1">{
+        return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) </span><span class="cov8" title="1">{
+
+                defer func() </span><span class="cov8" title="1">{
+
+                        // Load Configurations
+                        logConfig, err := config.LoadLogConfig()
+                        if err != nil </span><span class="cov0" title="0">{
+                                log.Fatal(err)
+                        }</span>
+                        // Initialize Logger
+                        <span class="cov8" title="1">appLogger, err := logger.New(logConfig)
+                        if err != nil </span><span class="cov0" title="0">{
+                                log.Fatal(err)
+                        }</span>
+                        <span class="cov8" title="1">defer appLogger.Close()
+
+                        if err := recover(); err != nil </span><span class="cov8" title="1">{
+
+                                appLogger.Info("PANIC RECOVERED: %v", err)
+
+                                http.Error(
+                                        w,
+                                        "Internal Server Error",
+                                        http.StatusInternalServerError,
+                                )
+                        }</span>
+                }()
+
+                <span class="cov8" title="1">next.ServeHTTP(w, r)</span>
+        })
+}
+</pre>
+		
+		<pre class="file" id="file11" style="display: none">package middleware
+
+import "net/http"
+
+func ContentTypeValidation(next http.Handler) http.Handler <span class="cov8" title="1">{
+        return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) </span><span class="cov8" title="1">{
+
+                // Only validate methods that normally have a request body
+                switch r.Method </span>{
+                case http.MethodPost, http.MethodPut, http.MethodPatch:<span class="cov8" title="1">
+                        if r.Header.Get("Content-Type") != "application/json" </span><span class="cov8" title="1">{
+                                http.Error(w, "Content-Type must be application/json please fix it and retry", http.StatusUnsupportedMediaType)
+                                return
+                        }</span>
+                }
+
+                <span class="cov8" title="1">next.ServeHTTP(w, r)</span>
+        })
+}
+</pre>
+		
+		<pre class="file" id="file12" style="display: none">package middleware
+
+import (
+        "insurance-api/internal/config"
+        "insurance-api/internal/logger"
+        "log"
+        "net/http"
+        "time"
+)
+
+func RequestLogging(next http.Handler) http.Handler <span class="cov8" title="1">{
+        return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) </span><span class="cov8" title="1">{
+
+                // Load Configurations
+                logConfig, err := config.LoadLogConfig()
+                if err != nil </span><span class="cov0" title="0">{
+                        log.Fatal(err)
+                }</span>
+                // Initialize Logger
+                <span class="cov8" title="1">appLogger, err := logger.New(logConfig)
+                if err != nil </span><span class="cov0" title="0">{
+                        log.Fatal(err)
+                }</span>
+                <span class="cov8" title="1">defer appLogger.Close()
+
+                start := time.Now()
+
+                duration := time.Since(start)
+
+                appLogger.Info("Method= " + r.Method + ", UrlPath= " + r.URL.Path + ", Duration= " + duration.String())
+
+                next.ServeHTTP(w, r)</span>
+        })
+}
+</pre>
+		
+		<pre class="file" id="file13" style="display: none">package repository
+
+import (
+        "insurance-api/internal/models"
+
+        "gorm.io/gorm"
+)
+
+type claimRepository struct {
+        db *gorm.DB
+}
+
+func NewClaimRepository(db *gorm.DB) ClaimRepository <span class="cov0" title="0">{
+        return &amp;claimRepository{
+                db: db,
+        }
+}</span>
+
+func (r *claimRepository) Create(claim *models.Claim) error <span class="cov0" title="0">{
+        return r.db.Create(claim).Error
+}</span>
+
+func (r *claimRepository) GetByID(id uint) (*models.Claim, error) <span class="cov0" title="0">{
+        var claim models.Claim
+
+        err := r.db.
+                Preload("CustomerPolicy").
+                First(&amp;claim, id).Error
+
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return &amp;claim, nil</span>
+}
+
+func (r *claimRepository) GetAll() ([]models.Claim, error) <span class="cov0" title="0">{
+        var claims []models.Claim
+
+        err := r.db.
+                Preload("CustomerPolicy").
+                Find(&amp;claims).Error
+
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return claims, nil</span>
+}
+
+func (r *claimRepository) Update(claim *models.Claim) error <span class="cov0" title="0">{
+        return r.db.Save(claim).Error
+}</span>
+
+func (r *claimRepository) Delete(id uint) error <span class="cov0" title="0">{
+        return r.db.Delete(&amp;models.Claim{}, id).Error
+}</span>
+
+func (r *claimRepository) GetByCustomerPolicyID(customerPolicyID uint) ([]models.Claim, error) <span class="cov0" title="0">{
+        var claims []models.Claim
+
+        err := r.db.
+                Where("customer_policy_id = ?", customerPolicyID).
+                Find(&amp;claims).Error
+
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return claims, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file14" style="display: none">package repository
+
+import (
+        "insurance-api/internal/models"
+
+        "gorm.io/gorm"
+)
+
+type customerPolicyRepository struct {
+        db *gorm.DB
+}
+
+func NewCustomerPolicyRepository(db *gorm.DB) CustomerPolicyRepository <span class="cov0" title="0">{
+        return &amp;customerPolicyRepository{
+                db: db,
+        }
+}</span>
+
+func (r *customerPolicyRepository) Create(customerPolicy *models.CustomerPolicy) error <span class="cov0" title="0">{
+        return r.db.Create(customerPolicy).Error
+}</span>
+
+func (r *customerPolicyRepository) GetByID(id uint) (*models.CustomerPolicy, error) <span class="cov0" title="0">{
+        var customerPolicy models.CustomerPolicy
+
+        err := r.db.
+                Preload("Customer").
+                Preload("Policy").
+                First(&amp;customerPolicy, id).Error
+
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return &amp;customerPolicy, nil</span>
+}
+
+func (r *customerPolicyRepository) GetAll() ([]models.CustomerPolicy, error) <span class="cov0" title="0">{
+        var customerPolicies []models.CustomerPolicy
+
+        err := r.db.
+                Preload("Customer").
+                Preload("Policy").
+                Find(&amp;customerPolicies).Error
+
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return customerPolicies, nil</span>
+}
+
+func (r *customerPolicyRepository) Update(customerPolicy *models.CustomerPolicy) error <span class="cov0" title="0">{
+        return r.db.Save(customerPolicy).Error
+}</span>
+
+func (r *customerPolicyRepository) Delete(id uint) error <span class="cov0" title="0">{
+        return r.db.Delete(&amp;models.CustomerPolicy{}, id).Error
+}</span>
+
+func (r *customerPolicyRepository) GetByCustomerID(customerID uint) ([]models.CustomerPolicy, error) <span class="cov0" title="0">{
+        var customerPolicies []models.CustomerPolicy
+
+        err := r.db.
+                Preload("Policy").
+                Where("customer_id = ?", customerID).
+                Find(&amp;customerPolicies).Error
+
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return customerPolicies, nil</span>
+}
+
+func (r *customerPolicyRepository) GetByPolicyID(policyID uint) ([]models.CustomerPolicy, error) <span class="cov0" title="0">{
+        var customerPolicies []models.CustomerPolicy
+
+        err := r.db.
+                Preload("Customer").
+                Where("policy_id = ?", policyID).
+                Find(&amp;customerPolicies).Error
+
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return customerPolicies, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file15" style="display: none">package repository
+
+import (
+        models "insurance-api/internal/models"
+
+        "gorm.io/gorm"
+)
+
+type customerRepository struct {
+        db *gorm.DB
+}
+
+func NewCustomerRepository(db *gorm.DB) CustomerRepository <span class="cov0" title="0">{
+        return &amp;customerRepository{
+                db: db,
+        }
+}</span>
+
+func (r *customerRepository) Create(customer *models.Customer) error <span class="cov0" title="0">{
+        return r.db.Create(customer).Error
+}</span>
+
+func (r *customerRepository) GetByID(id uint) (*models.Customer, error) <span class="cov0" title="0">{
+        var customer models.Customer
+
+        err := r.db.First(&amp;customer, id).Error
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return &amp;customer, nil</span>
+}
+
+func (r *customerRepository) GetAll() ([]models.Customer, error) <span class="cov0" title="0">{
+        var customers []models.Customer
+
+        err := r.db.Find(&amp;customers).Error
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return customers, nil</span>
+}
+
+func (r *customerRepository) Update(customer *models.Customer) error <span class="cov0" title="0">{
+        return r.db.Save(customer).Error
+}</span>
+
+func (r *customerRepository) Delete(id uint) error <span class="cov0" title="0">{
+        return r.db.Delete(&amp;models.Customer{}, id).Error
+}</span>
+</pre>
+		
+		<pre class="file" id="file16" style="display: none">package repository
+
+import (
+        "insurance-api/internal/models"
+
+        "gorm.io/gorm"
+)
+
+type policyRepository struct {
+        db *gorm.DB
+}
+
+func NewPolicyRepository(db *gorm.DB) PolicyRepository <span class="cov0" title="0">{
+        return &amp;policyRepository{
+                db: db,
+        }
+}</span>
+
+func (r *policyRepository) Create(policy *models.Policy) error <span class="cov0" title="0">{
+        return r.db.Create(policy).Error
+}</span>
+
+func (r *policyRepository) GetByID(id uint) (*models.Policy, error) <span class="cov0" title="0">{
+        var policy models.Policy
+
+        err := r.db.First(&amp;policy, id).Error
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return &amp;policy, nil</span>
+}
+
+func (r *policyRepository) GetAll() ([]models.Policy, error) <span class="cov0" title="0">{
+        var policies []models.Policy
+
+        err := r.db.Find(&amp;policies).Error
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return policies, nil</span>
+}
+
+func (r *policyRepository) Update(policy *models.Policy) error <span class="cov0" title="0">{
+        return r.db.Save(policy).Error
+}</span>
+
+func (r *policyRepository) Delete(id uint) error <span class="cov0" title="0">{
+        return r.db.Delete(&amp;models.Policy{}, id).Error
+}</span>
+</pre>
+		
+		<pre class="file" id="file17" style="display: none">package routes
+
+import (
+        "net/http"
+
+        "insurance-api/internal/handlers"
+        "insurance-api/internal/middleware"
+)
+
+func RegisterClaimRoutes(
+        mux *http.ServeMux,
+        handler *handlers.ClaimHandler,
+) <span class="cov8" title="1">{
+        mux.Handle("POST /claims", middleware.ContentTypeValidation(middleware.RequestLogging(http.HandlerFunc(handler.Create))))
+        mux.Handle("GET /claims", middleware.RequestLogging(middleware.Recovery(http.HandlerFunc(handler.GetAll))))
+        mux.HandleFunc("GET /claims/{id}", handler.GetByID)
+        mux.Handle("PUT /claims/{id}", middleware.ContentTypeValidation(http.HandlerFunc(handler.Update)))
+        mux.Handle("DELETE /claims/{id}", middleware.ContentTypeValidation(http.HandlerFunc(handler.Delete)))
+}</span>
+</pre>
+		
+		<pre class="file" id="file18" style="display: none">package routes
+
+import (
+        "net/http"
+
+        "insurance-api/internal/handlers"
+)
+
+func RegisterCustomerPolicyRoutes(
+        mux *http.ServeMux,
+        handler *handlers.CustomerPolicyHandler,
+) <span class="cov8" title="1">{
+        mux.HandleFunc("POST /customer-policies", handler.Create)
+        mux.HandleFunc("GET /customer-policies", handler.GetAll)
+        mux.HandleFunc("GET /customer-policies/{id}", handler.GetByID)
+        mux.HandleFunc("PUT /customer-policies/{id}", handler.Update)
+        mux.HandleFunc("DELETE /customer-policies/{id}", handler.Delete)
+}</span>
+</pre>
+		
+		<pre class="file" id="file19" style="display: none">package routes
+
+import (
+        "net/http"
+
+        "insurance-api/internal/handlers"
+)
+
+func RegisterCustomerRoutes(
+        mux *http.ServeMux,
+        handler *handlers.CustomerHandler,
+) <span class="cov8" title="1">{
+        mux.HandleFunc("POST /customers", handler.Create)
+        mux.HandleFunc("GET /customers", handler.GetAll)
+        mux.HandleFunc("GET /customers/{id}", handler.GetByID)
+        mux.HandleFunc("PUT /customers/{id}", handler.Update)
+        mux.HandleFunc("DELETE /customers/{id}", handler.Delete)
+}</span>
+</pre>
+		
+		<pre class="file" id="file20" style="display: none">package routes
+
+import (
+        "net/http"
+
+        "insurance-api/internal/handlers"
+)
+
+func RegisterPolicyRoutes(
+        mux *http.ServeMux,
+        handler *handlers.PolicyHandler,
+) <span class="cov8" title="1">{
+        mux.HandleFunc("POST /policies", handler.Create)
+        mux.HandleFunc("GET /policies", handler.GetAll)
+        mux.HandleFunc("GET /policies/{id}", handler.GetByID)
+        mux.HandleFunc("PUT /policies/{id}", handler.Update)
+        mux.HandleFunc("DELETE /policies/{id}", handler.Delete)
+}</span>
+</pre>
+		
+		<pre class="file" id="file21" style="display: none">package routes
+
+import (
+        "net/http"
+
+        "insurance-api/internal/handlers"
+)
+
+func RegisterRoutes(
+        mux *http.ServeMux,
+        customerHandler *handlers.CustomerHandler,
+        policyHandler *handlers.PolicyHandler,
+        customerPolicyHandler *handlers.CustomerPolicyHandler,
+        claimHandler *handlers.ClaimHandler,
+) <span class="cov8" title="1">{
+        RegisterCustomerRoutes(mux, customerHandler)
+        RegisterPolicyRoutes(mux, policyHandler)
+        RegisterCustomerPolicyRoutes(mux, customerPolicyHandler)
+        RegisterClaimRoutes(mux, claimHandler)
+}</span>
+</pre>
+		
+		<pre class="file" id="file22" style="display: none">package service
+
+import (
+        "insurance-api/internal/models"
+        "insurance-api/internal/repository"
+)
+
+type claimService struct {
+        repo repository.ClaimRepository
+}
+
+func NewClaimService(repo repository.ClaimRepository) ClaimService <span class="cov8" title="1">{
+        return &amp;claimService{
+                repo: repo,
+        }
+}</span>
+
+func (s *claimService) Create(claim *models.Claim) error <span class="cov8" title="1">{
+        return s.repo.Create(claim)
+}</span>
+
+func (s *claimService) GetByID(id uint) (*models.Claim, error) <span class="cov8" title="1">{
+        return s.repo.GetByID(id)
+}</span>
+
+func (s *claimService) GetAll() ([]models.Claim, error) <span class="cov8" title="1">{
+        return s.repo.GetAll()
+}</span>
+
+func (s *claimService) Update(claim *models.Claim) error <span class="cov8" title="1">{
+        return s.repo.Update(claim)
+}</span>
+
+func (s *claimService) Delete(id uint) error <span class="cov8" title="1">{
+        return s.repo.Delete(id)
+}</span>
+
+func (s *claimService) GetByCustomerPolicyID(customerPolicyID uint) ([]models.Claim, error) <span class="cov8" title="1">{
+        return s.repo.GetByCustomerPolicyID(customerPolicyID)
+}</span>
+</pre>
+		
+		<pre class="file" id="file23" style="display: none">package service
+
+import (
+        "insurance-api/internal/models"
+        "insurance-api/internal/repository"
+)
+
+type customerPolicyService struct {
+        repo repository.CustomerPolicyRepository
+}
+
+func NewCustomerPolicyService(repo repository.CustomerPolicyRepository) CustomerPolicyService <span class="cov8" title="1">{
+        return &amp;customerPolicyService{
+                repo: repo,
+        }
+}</span>
+
+func (s *customerPolicyService) Create(customerPolicy *models.CustomerPolicy) error <span class="cov8" title="1">{
+        return s.repo.Create(customerPolicy)
+}</span>
+
+func (s *customerPolicyService) GetByID(id uint) (*models.CustomerPolicy, error) <span class="cov8" title="1">{
+        return s.repo.GetByID(id)
+}</span>
+
+func (s *customerPolicyService) GetAll() ([]models.CustomerPolicy, error) <span class="cov8" title="1">{
+        return s.repo.GetAll()
+}</span>
+
+func (s *customerPolicyService) Update(customerPolicy *models.CustomerPolicy) error <span class="cov8" title="1">{
+        return s.repo.Update(customerPolicy)
+}</span>
+
+func (s *customerPolicyService) Delete(id uint) error <span class="cov8" title="1">{
+        return s.repo.Delete(id)
+}</span>
+
+func (s *customerPolicyService) GetByCustomerID(customerID uint) ([]models.CustomerPolicy, error) <span class="cov8" title="1">{
+        return s.repo.GetByCustomerID(customerID)
+}</span>
+
+func (s *customerPolicyService) GetByPolicyID(policyID uint) ([]models.CustomerPolicy, error) <span class="cov8" title="1">{
+        return s.repo.GetByPolicyID(policyID)
+}</span>
+</pre>
+		
+		<pre class="file" id="file24" style="display: none">package service
+
+import (
+        "insurance-api/internal/models"
+        "insurance-api/internal/repository"
+)
+
+type customerService struct {
+        repo repository.CustomerRepository
+}
+
+func NewCustomerService(repo repository.CustomerRepository) CustomerService <span class="cov8" title="1">{
+        return &amp;customerService{
+                repo: repo,
+        }
+}</span>
+
+func (s *customerService) Create(customer *models.Customer) error <span class="cov8" title="1">{
+        return s.repo.Create(customer)
+}</span>
+
+func (s *customerService) GetByID(id uint) (*models.Customer, error) <span class="cov8" title="1">{
+        return s.repo.GetByID(id)
+}</span>
+
+func (s *customerService) GetAll() ([]models.Customer, error) <span class="cov8" title="1">{
+        return s.repo.GetAll()
+}</span>
+
+func (s *customerService) Update(customer *models.Customer) error <span class="cov8" title="1">{
+        return s.repo.Update(customer)
+}</span>
+
+func (s *customerService) Delete(id uint) error <span class="cov8" title="1">{
+        return s.repo.Delete(id)
+}</span>
+</pre>
+		
+		<pre class="file" id="file25" style="display: none">package service
+
+import (
+        "insurance-api/internal/models"
+        "insurance-api/internal/repository"
+)
+
+type policyService struct {
+        repo repository.PolicyRepository
+}
+
+func NewPolicyService(repo repository.PolicyRepository) PolicyService <span class="cov8" title="1">{
+        return &amp;policyService{
+                repo: repo,
+        }
+}</span>
+
+func (s *policyService) Create(policy *models.Policy) error <span class="cov8" title="1">{
+        return s.repo.Create(policy)
+}</span>
+
+func (s *policyService) GetByID(id uint) (*models.Policy, error) <span class="cov8" title="1">{
+        return s.repo.GetByID(id)
+}</span>
+
+func (s *policyService) GetAll() ([]models.Policy, error) <span class="cov8" title="1">{
+        return s.repo.GetAll()
+}</span>
+
+func (s *policyService) Update(policy *models.Policy) error <span class="cov8" title="1">{
+        return s.repo.Update(policy)
+}</span>
+
+func (s *policyService) Delete(id uint) error <span class="cov8" title="1">{
+        return s.repo.Delete(id)
+}</span>
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>

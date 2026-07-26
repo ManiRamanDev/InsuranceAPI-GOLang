@@ -1,0 +1,75 @@
+{"time":"2026-07-26T16:47:12.764814+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T16:47:12.8174782+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T16:49:40.9710445+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T16:49:41.1544295+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T16:53:44.2030432+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T16:53:44.2745928+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T16:54:13.11868+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T16:54:13.1859473+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T16:55:06.3021793+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T16:55:06.3753924+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T16:58:58.6848406+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T16:58:58.7543781+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T16:58:58.7543781+05:30","level":"ERROR","msg":"Server stopped","error":"listen tcp: address :8080:8080: too many colons in address"}
+{"time":"2026-07-26T16:59:10.1923199+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T16:59:10.2511971+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T16:59:10.2511971+05:30","level":"ERROR","msg":"Server stopped","error":"listen tcp: address :8080:8080: too many colons in address"}
+{"time":"2026-07-26T16:59:35.9815319+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T16:59:36.0359446+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T17:00:10.2591003+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T17:00:10.3241221+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T17:02:44.1689572+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T17:02:44.2244261+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T17:20:49.2297077+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T17:20:49.3524185+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T18:41:42.0400771+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T18:41:42.4919038+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T19:03:57.1497149+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T19:03:57.5500957+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T19:35:21.1272034+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T19:35:21.5491366+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T20:15:43.4679429+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T20:15:43.725274+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T20:16:33.6853534+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T20:16:33.8915754+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T20:30:40.4046808+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T20:30:40.9552778+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T20:31:11.0534482+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T20:31:11.3715653+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T21:04:21.762086+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T21:04:22.2432278+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T21:08:02.7038142+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T21:08:02.9126646+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T21:11:41.8380365+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T21:11:42.1203198+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T21:13:09.08969+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T21:13:09.266604+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T21:13:15.2516254+05:30","level":"INFO","msg":"Method= GET, UrlPath= /claims, Duration= 0s"}
+{"time":"2026-07-26T21:33:10.1285901+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T21:33:10.409833+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T23:06:00.5893082+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T23:06:01.4433234+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T23:06:33.8677259+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T23:06:34.1633802+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T23:06:59.9788281+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T23:07:00.2895067+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T23:07:00.342772+05:30","level":"ERROR","msg":"Server stopped","error":"tls: failed to parse private key"}
+{"time":"2026-07-26T23:09:15.984108+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T23:09:16.3881272+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T23:09:16.4025118+05:30","level":"ERROR","msg":"Server stopped","error":"tls: failed to parse private key"}
+{"time":"2026-07-26T23:10:46.4163136+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T23:10:46.7164252+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T23:10:46.7180858+05:30","level":"ERROR","msg":"Server stopped","error":"tls: failed to parse private key"}
+{"time":"2026-07-26T23:11:48.8205774+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T23:11:49.1592924+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T23:11:49.1641812+05:30","level":"ERROR","msg":"Server stopped","error":"tls: failed to parse private key"}
+{"time":"2026-07-26T23:11:57.4576181+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T23:11:57.6612344+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T23:11:57.663961+05:30","level":"ERROR","msg":"Server stopped","error":"tls: failed to parse private key"}
+{"time":"2026-07-26T23:21:30.8346582+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T23:21:31.2150349+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T23:21:31.2171048+05:30","level":"ERROR","msg":"Server stopped","error":"tls: failed to parse private key"}
+{"time":"2026-07-26T23:24:14.5048173+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T23:24:14.7457652+05:30","level":"INFO","msg":"Server listening on port 8080"}
+{"time":"2026-07-26T23:30:21.538005+05:30","level":"INFO","msg":"Starting Insurance API..."}
+{"time":"2026-07-26T23:30:21.7657964+05:30","level":"INFO","msg":"Server listening on port 8080"}
