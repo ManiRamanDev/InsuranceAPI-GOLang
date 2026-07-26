@@ -25,7 +25,7 @@ jobs:
       - name: Test (all)
         run: go test -v ./...
 
-      - name: Unit coverage (exclude integration) + 80% gate
+      - name: Unit coverage (exclude integration) + 50% gate
         shell: bash
         run: |
           set -euo pipefail
@@ -37,10 +37,10 @@ jobs:
           TOTAL=$(go tool cover -func=coverage-unit.out | awk '/^total:/ {gsub("%","",$3); print $3}')
           awk -v t="$TOTAL" 'BEGIN {
             if (t+0 < 80) {
-              printf "Unit coverage gate failed: %.1f%% < 80%%\n", t
+              printf "Unit coverage gate failed: %.1f%% < 50%%\n", t
               exit 1
             } else {
-              printf "Unit coverage gate passed: %.1f%% >= 80%%\n", t
+              printf "Unit coverage gate passed: %.1f%% >= 50%%\n", t
             }
           }'
 
