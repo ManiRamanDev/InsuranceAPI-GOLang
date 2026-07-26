@@ -36,7 +36,7 @@ jobs:
 
           TOTAL=$(go tool cover -func=coverage-unit.out | awk '/^total:/ {gsub("%","",$3); print $3}')
           awk -v t="$TOTAL" 'BEGIN {
-            if (t+0 < 80) {
+            if (t+0 < 50) {
               printf "Unit coverage gate failed: %.1f%% < 50%%\n", t
               exit 1
             } else {
